@@ -81,3 +81,57 @@
     },
   };
 }
+{
+  type HasName = {
+    name: string;
+  };
+  // ジェネリクスの引数をextendsすることができる
+  type Family<Parent extends HasName, Child extends Parent> = {
+    mother: Parent;
+    father: Parent;
+    child: Child;
+  };
+  type Animal = {
+    name: string;
+  };
+  type Human = {
+    name: string;
+    age: number;
+  };
+  type S = Family<Animal, Human>;
+  // type T = Family<Human, Animal>;
+}
+{
+  type Animal = {
+    name: string;
+  };
+  type Family<Parent = Animal, Child = Animal> = {
+    mother: Parent;
+    father: Parent;
+    child: Child;
+  };
+  type S = Family<string, string>;
+  type T = Family;
+  type U = Family<string>;
+  const s: S = {
+    mother: 'dgsa',
+  };
+  const t: T = {
+    mother: {
+      name: 'fuga',
+    },
+    father: {
+      name: 'piyo',
+    },
+    child: {
+      name: 'hoge',
+    },
+  };
+  const u: U = {
+    mother: 'hoge',
+    father: 'hoge',
+    child: {
+      name: 'hoge',
+    },
+  };
+}

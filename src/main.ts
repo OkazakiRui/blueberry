@@ -135,3 +135,33 @@
     },
   };
 }
+{
+  type HasName = {
+    name: string;
+  };
+  type Animal = {
+    name: string;
+  };
+  type Family<Parent extends HasName, Child extends HasName = Animal> = {
+    mother: Parent;
+    father: Parent;
+    child: Child;
+  };
+  type Human = {
+    name: string;
+    age: number;
+  };
+  const f: Family<Human> = {
+    mother: {
+      name: 'mother',
+      age: 12,
+    },
+    father: {
+      name: 'father',
+      age: 12,
+    },
+    child: {
+      name: 'child',
+    },
+  };
+}

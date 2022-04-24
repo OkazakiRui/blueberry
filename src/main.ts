@@ -115,6 +115,8 @@
   type U = Family<string>;
   const s: S = {
     mother: 'dgsa',
+    father: 'hoe',
+    child: 'adfa',
   };
   const t: T = {
     mother: {
@@ -164,8 +166,19 @@
       name: 'child',
     },
   };
+  f;
 }
 {
   type ary1 = Array<string>;
   type ary2 = ReadonlyArray<string>;
+}
+{
+  const ary = [1, 10, 100];
+  for (const val of ary) {
+    // console.log(val);
+  }
+}
+{
+  type User = [name: string, age: number];
+  const rui: User = ['awea', 213];
 }

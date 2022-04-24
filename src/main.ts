@@ -165,3 +165,7 @@
     },
   };
 }
+{
+  type ary1 = Array<string>;
+  type ary2 = ReadonlyArray<string>;
+}

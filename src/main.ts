@@ -182,3 +182,17 @@
   type User = [name: string, age: number];
   const rui: User = ['awea', 213];
 }
+{
+  const nest = {
+    num: 123,
+    obj: {
+      foo: 'hoge',
+      bar: 'fuga',
+    },
+  };
+  const {
+    num,
+    obj: { foo },
+  } = nest;
+  console.log(num, foo);
+}

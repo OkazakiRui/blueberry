@@ -196,3 +196,9 @@
   } = nest;
   console.log(num, foo);
 }
+{
+  const obj: { num: number; foo?: number } = {
+    num: 123,
+  };
+  const { num, foo = 300 } = obj;
+}

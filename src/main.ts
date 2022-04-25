@@ -218,14 +218,14 @@
   const lines = data.split('\n');
   for (const line of lines) {
     if (line.replace(/^ +/g, '') === '') continue;
-    const replacedData = line
+    const [name, ageString, premiumUserString] = line
       .replace(/^ +/g, '')
       .replace(/, /g, ',')
       .split(',');
     users.push({
-      name: replacedData[0],
-      age: Number(replacedData[1]),
-      premiumUser: replacedData[2] === '1' ? true : false,
+      name,
+      age: Number(ageString),
+      premiumUser: premiumUserString === '1',
     });
   }
 

@@ -194,11 +194,47 @@
     num,
     obj: { foo },
   } = nest;
-  console.log(num, foo);
+  // console.log(num, foo);
 }
 {
   const obj: { num: number; foo?: number } = {
     num: 123,
   };
   const { num, foo = 300 } = obj;
+}
+{
+  type User = {
+    name: string;
+    age: number;
+    premiumUser: boolean;
+  };
+  const data = `
+  uhyo,57,1
+  John Smith, 18, 0
+  Mary Sue, 12, 1
+  `;
+
+  const users: User[] = [];
+  const lines = data.split('\n');
+  for (const line of lines) {
+    if (line.replace(/^ +/g, '') === '') continue;
+    const replacedData = line
+      .replace(/^ +/g, '')
+      .replace(/, /g, ',')
+      .split(',');
+    users.push({
+      name: replacedData[0],
+      age: Number(replacedData[1]),
+      premiumUser: replacedData[2] === '1' ? true : false,
+    });
+  }
+
+  for (const user of users) {
+    if (user.premiumUser)
+      console.log(`${user.name} (${user.age}) はプレミアムユーザーです`);
+    else
+      console.log(
+        `${user.name} (${user.age}) はプレミアムユーザーではありません`
+      );
+  }
 }

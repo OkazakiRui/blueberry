@@ -259,3 +259,19 @@
   }
   // console.log(map([1, 2, 3, 4, 5, 6], (number) => number * 2 > 6));
 }
+{
+  class User {
+    name: string;
+    age: number;
+    constructor({ name, age }: { name: string; age: number }) {
+      this.name = name;
+      this.age = age;
+    }
+    isAdult(): boolean {
+      return this.age >= 20;
+    }
+  }
+  const okazaki = new User({ name: 'okazaki', age: 20 });
+  console.log(okazaki.name);
+  console.log(okazaki.isAdult());
+}

@@ -230,11 +230,22 @@
   }
 
   for (const user of users) {
-    if (user.premiumUser)
-      console.log(`${user.name} (${user.age}) はプレミアムユーザーです`);
-    else
-      console.log(
-        `${user.name} (${user.age}) はプレミアムユーザーではありません`
-      );
+    if (user.premiumUser) {
+      // console.log(`${user.name} (${user.age}) はプレミアムユーザーです`);
+    } else {
+      // console.log(
+      //   `${user.name} (${user.age}) はプレミアムユーザーではありません`
+      // );
+    }
   }
+}
+{
+  function map(array: number[], callback: (value: number) => number): number[] {
+    const result: number[] = [];
+    for (const value of array) {
+      result.push(callback(value));
+    }
+    return result;
+  }
+  // console.log(map([1, 2, 3, 4, 5, 6], (number) => number * 2));
 }

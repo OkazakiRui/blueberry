@@ -272,6 +272,52 @@
     }
   }
   const okazaki = new User({ name: 'okazaki', age: 20 });
-  console.log(okazaki.name);
-  console.log(okazaki.isAdult());
+  // console.log(okazaki.name);
+  // console.log(okazaki.isAdult());
+}
+{
+  class User {
+    readonly name: string;
+    age: number;
+    constructor({ name, age }: { name: string; age: number }) {
+      // 初期化される前に呼び出しているのでエラーがでる
+      // console.log(this.name);
+
+      this.name = name;
+      this.age = age;
+
+      // 初期化済みなのでエラーは出ない
+      // console.log(this.name);
+    }
+    isAdult(): boolean {
+      return this.age >= 20;
+    }
+  }
+  const okazaki = new User({ name: 'okazaki', age: 20 });
+  // nameはreadonlyなのでエラー
+  // okazaki.name = 'hoge';
+}
+{
+  class User {
+    static adminName: string = 'static okzk';
+    static getAdminUser() {
+      return new User({ name: User.adminName, age: 20 });
+    }
+
+    name: string;
+    age: number;
+    constructor({ name, age }: { name: string; age: number }) {
+      this.name = name;
+      this.age = age;
+    }
+    isAdult(): boolean {
+      return this.age >= 20;
+    }
+  }
+  const okazaki = new User({ name: 'okazaki', age: 20 });
+
+  // 静的メンバーはクラス名でアクセスできる
+  // インスタンスを作成しなくても使用することができる
+  // console.log(User.adminName);
+  // console.log(User.getAdminUser());
 }

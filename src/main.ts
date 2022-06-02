@@ -249,3 +249,13 @@
   }
   // console.log(map([1, 2, 3, 4, 5, 6], (number) => number * 2));
 }
+{
+  function map<T, U>(array: T[], callback: (value: T) => U): U[] {
+    const result: U[] = [];
+    for (const value of array) {
+      result.push(callback(value));
+    }
+    return result;
+  }
+  // console.log(map([1, 2, 3, 4, 5, 6], (number) => number * 2 > 6));
+}

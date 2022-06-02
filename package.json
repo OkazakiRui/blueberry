@@ -6,8 +6,14 @@
   "author": "RuiOkazaki <okazaki200226@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "tsc": "tsc -w",
+    "nodemon": "nodemon dist/main.js",
+    "dev": "clear; yarn tsc | yarn nodemon"
+  },
   "devDependencies": {
     "@types/node": "14.14.10",
+    "nodemon": "^2.0.16",
     "typescript": "4.6.2"
   }
 }

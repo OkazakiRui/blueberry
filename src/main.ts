@@ -321,3 +321,97 @@
   // console.log(User.adminName);
   // console.log(User.getAdminUser());
 }
+{
+  class User {
+    // 修飾詞をつけることで、コンストラクタの引数であると同時にプロパティ宣言を行う
+    // publicの場合も修飾詞はつけなくてはならない
+    // constructorの引数の中で初期化する構文はtsのもの
+    constructor(public name: string, private age: number) {
+      this.name = name;
+      this.age = age;
+    }
+    isAdult(): boolean {
+      return this.age >= 20;
+    }
+  }
+  const okazaki = new User('okazaki', 20);
+}
+{
+  // 宣言的にクラスを生成することもできる
+  // ただし、protectedやprivateは使えない
+  const User = class {
+    static adminName: string = 'static okzk';
+    static getAdminUser() {
+      return new User({ name: User.adminName, age: 20 });
+    }
+
+    name: string;
+    age: number;
+    constructor({ name, age }: { name: string; age: number }) {
+      this.name = name;
+      this.age = age;
+    }
+    isAdult(): boolean {
+      return this.age >= 20;
+    }
+  };
+  const okazaki = new User({ name: 'okazaki', age: 20 });
+}
+{
+  class User {
+    name: string;
+    // #でprivateにすることもできる
+    #age: number;
+    constructor({ name, age }: { name: string; age: number }) {
+      this.name = name;
+      this.#age = age;
+    }
+    isAdult(): boolean {
+      return this.#age >= 20;
+    }
+  }
+  const okazaki = new User({ name: 'okazaki', age: 20 });
+  // console.log(okazaki.#age);
+}
+{
+  class User {
+    #age: number = 0;
+
+    static adminUser: User;
+    static {
+      this.adminUser = new User();
+      this.adminUser.#age = 99999;
+    }
+
+    getAge() {
+      return this.#age;
+    }
+
+    setAge(value: number) {
+      if (0 > value || 150 < value) return;
+      this.#age = value;
+    }
+  }
+
+  // console.log(User.adminUser.getAge());
+}
+{
+  class User<T> {
+    name: string;
+    #age: number;
+    readonly data: T;
+
+    constructor(name: string, age: number, data: T) {
+      this.name = name;
+      this.#age = age;
+      this.data = data;
+    }
+
+    isAdult(): boolean {
+      return 20 <= this.#age;
+    }
+  }
+  const okazaki1 = new User('okazaki', 20, true);
+  const okazaki2 = new User('okazaki', 20, { mother: 'tomoko' });
+  const okazaki3 = new User('okazaki', 20, 20020206);
+}

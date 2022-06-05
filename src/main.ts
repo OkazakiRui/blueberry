@@ -553,3 +553,55 @@ import { constructor } from 'console';
   const okzk = new User('okazaki', 20);
   // console.log(okzk.getMessage('hello world'));
 }
+{
+  type Animal = {
+    species: string;
+  };
+  type Human = {
+    name: string;
+  };
+  type User = Animal | Human;
+  const tama: User = {
+    species: 'Felis silvestris catus',
+  };
+  const okzk: User = {
+    name: 'okazaki',
+  };
+}
+{
+  type Animal = {
+    species: string;
+    age: number;
+  };
+  type Human = Animal & {
+    name: string;
+  };
+  const tama: Animal = {
+    species: 'Felis silvestris catus',
+    age: 12,
+  };
+  const okzk: Human = {
+    species: 'Homo sapiens sapiens',
+    age: 20,
+    name: 'okazaki',
+  };
+}
+{
+  type StringAndNumber = string & number;
+}
+{
+  // string を継承することでジェネリクスの T は文字列型になる
+  function makeKey<T extends string>(userName: T) {
+    // as const で型にすることで、返り値に型を指定することができる
+    return `user:${userName}` as const;
+  }
+
+  const okzk = makeKey('okazaki');
+}
+{
+  // 引数の型が user:<T> というテンプレートリテラル型になる
+  function fromKey<T extends string>(key: `user:${T}`): T {
+    return key.slice(5) as T;
+  }
+  const okzk = fromKey('user:okazaki');
+}

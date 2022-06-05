@@ -1,3 +1,5 @@
+import { constructor } from 'console';
+
 {
   type Animal = {
     age: number;
@@ -414,4 +416,140 @@
   const okazaki1 = new User('okazaki', 20, true);
   const okazaki2 = new User('okazaki', 20, { mother: 'tomoko' });
   const okazaki3 = new User('okazaki', 20, 20020206);
+}
+{
+  class User {
+    name: string = 'okzk';
+    age: number = 200;
+
+    isAdult(): boolean {
+      return 20 <= this.age;
+    }
+  }
+  const okazaki: User = new User();
+  // typescriptが構造的部分型付け言語なので、エラーが起きていない
+  const hoge: User = {
+    name: 'hoge',
+    age: 20,
+    isAdult: () => true,
+  };
+}
+{
+  // typeと変数宣言では
+  // 名前空間が異なるためエラーが起きない
+  type item = {
+    name: string;
+    age: number;
+  };
+  const item: item = {
+    name: 'okzk',
+    age: 20,
+  };
+
+  // classの場合は型と変数名どちらの名前空間も使用する
+  class User {
+    name: string = 'okzk';
+    age: number = 20;
+  }
+  // どちらの名前空間も使用しているため、エラーが出る
+  // const User: User = new User();
+}
+{
+  class User {
+    name: string = 'okzk';
+    age: number = 20;
+  }
+  // newで初期化するとUserオブジェクトを返却するのでエラーが起きない
+  type MyUserConstructor = new () => User;
+  const MyUser: MyUserConstructor = User;
+  const u = new MyUser();
+  // console.log(u.name, u.age);
+}
+{
+  class User {
+    name: string;
+    #age: number;
+    constructor(name: string, age: number) {
+      this.name = name;
+      this.#age = age;
+    }
+    public isAdult(): boolean {
+      return 20 <= this.#age;
+    }
+  }
+
+  class PremiumUser extends User {
+    rank: number = 1;
+    public override isAdult(): boolean {
+      return true;
+    }
+  }
+}
+{
+  type HasName = { name: string };
+  // 共通型がある場合はimplementsで型をつけることができる
+  class User implements HasName {
+    name: string;
+    #age: number;
+    constructor(name: string, age: number) {
+      this.name = name;
+      this.#age = age;
+    }
+    public isAdult(): boolean {
+      return this.#age >= 20;
+    }
+  }
+}
+{
+  const throwError = () => {
+    throw new Error('エラーが発生しました');
+  };
+  // throwError();
+}
+{
+  const throwError = () => {
+    throw new Error('エラーが発生しました');
+  };
+
+  try {
+    // errorオブジェクトをcatchに投げる
+    // throwError();
+    // errorオブジェクトを受け取る
+  } catch (error) {
+    console.log('catch');
+    console.log(error);
+  } finally {
+    // console.log('終わり');
+  }
+}
+{
+  class User {
+    constructor(readonly name: string, readonly age: number) {
+      if (name === '') throw new Error('nameを入力してください');
+      this.name = name;
+      this.age = age;
+    }
+    getMessage(message: string): string {
+      return `${this.name}(${this.age}) : ${message}`;
+    }
+  }
+  const okzk = new User('okazaki', 20);
+  // console.log(okzk.getMessage('hello world'));
+}
+{
+  class User {
+    readonly #name: string;
+    readonly #age: number;
+
+    constructor(name: string, age: number) {
+      if (name === '') throw new Error('nameを入力してください');
+      this.#name = name;
+      this.#age = age;
+    }
+    getMessage(message: string): string {
+      return `${this.#name}(${this.#age}) : ${message}`;
+    }
+  }
+  const okzk = new User('okazaki', 20);
+  // console.log(okzk.getMessage('hello world'));
 }

@@ -605,3 +605,79 @@ import { constructor } from 'console';
   }
   const okzk = fromKey('user:okazaki');
 }
+{
+  type Human = {
+    type: 'human';
+    name: string;
+    age: number;
+  };
+  // 型情報の中の型情報を引っ張ってくることを
+  // lockup型という
+  function setAge(human: Human, age: Human['age']) {
+    return {
+      ...human,
+      age,
+    };
+  }
+  const okzk: Human = {
+    type: 'human',
+    name: 'okazaki',
+    age: 20,
+  };
+  const newOkzk = setAge(okzk, 30);
+}
+{
+  type Human = {
+    name: string;
+    age: number;
+  };
+  // Humanのkey名を文字リテラル型として取得する
+  type HumanKeys = keyof Human;
+  let key: HumanKeys = 'name';
+  key = 'age';
+  // 対象の文字リテラル型でないためエラーが出る
+  // key = 'okazaki';
+}
+{
+  // ミリメートルをメートルやキロメートルに変換するための指数を格納
+  const mmConversionTable = {
+    mm: 1,
+    cm: 10,
+    m: 1e3,
+    km: 1e6,
+  };
+
+  type keyMM = keyof typeof mmConversionTable;
+
+  const convertUnits = (
+    // 変換したい数字を指定
+    value: number,
+    // 変換したい単位を指定
+    unit: keyof typeof mmConversionTable
+  ) => {
+    const mmValue = value * mmConversionTable[unit];
+    return {
+      mm: mmValue,
+      cm: mmValue / 10,
+      m: mmValue / 1e3,
+      km: mmValue / 1e6,
+    };
+  };
+  // console.log(convertUnits(5600, 'm'));
+  // console.log(convertUnits(5600, 'cm'));
+}
+{
+  const get = <T, K extends keyof T>(obj: T, key: K): T[K] => {
+    return obj[key];
+  };
+  type Human = {
+    name: string;
+    age: number;
+  };
+  const okzk: Human = {
+    name: 'okazaki',
+    age: 20,
+  };
+  const okzkName = get(okzk, 'name');
+  const okzkAge = get(okzk, 'age');
+}

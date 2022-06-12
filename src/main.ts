@@ -681,3 +681,56 @@ import { constructor } from 'console';
   const okzkName = get(okzk, 'name');
   const okzkAge = get(okzk, 'age');
 }
+{
+  const names = ['sato', 'okzk', 'tnk'] as const;
+}
+{
+  const doNothing = (val: unknown) => {
+    console.log(val);
+  };
+  // doNothing(1);
+}
+{
+  type HasToString = {
+    toString: () => string;
+  };
+  const useToString1 = (value: HasToString) => {
+    // console.log(value.toString());
+  };
+  useToString1({
+    toString() {
+      return 'hello';
+    },
+  });
+  useToString1(3.14);
+}
+{
+  type HasToString = {
+    toString: () => string;
+  };
+  // object型を合わせることで、プリミティブな値を渡した場合にエラーにならない
+  const useToString1 = (value: HasToString & object) => {
+    // console.log(value.toString());
+  };
+  useToString1({
+    toString() {
+      return 'hello';
+    },
+  });
+  // 型エラーを出せる
+  // useToString1(3.14);
+}
+{
+  type RestArgs<M> = M extends 'string'
+    ? [string, string]
+    : [number, number, number];
+
+  const func = <M extends 'string' | 'number'>(
+    mode: M,
+    ...args: RestArgs<M>
+  ) => {
+    console.log(mode, ...args);
+  };
+  func('number', 1, 2, 3);
+  func('string', 'a', 'b');
+}
